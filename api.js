@@ -8,10 +8,10 @@ app.use(bodyParser.urlencoded({
 
 
 var nconf = require('nconf');
-nconf.argv().env().file({ file: 'config.json' });
+nconf.argv().env().file({ file: './config.json' });
 
 var mongoose   = require('mongoose');
-//mongoose.connect( nconf.get('database') );
+mongoose.connect( nconf.get('database') );
 
 var port = process.env.PORT || 8000;
 var userRoute = require(__dirname + '/user');
@@ -20,4 +20,4 @@ app.use('/api/user', userRoute);
 
 app.listen(port);
 
-//
+console.log("$Server started on port: " + port);

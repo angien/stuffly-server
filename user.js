@@ -1,13 +1,15 @@
 var express = require('express');
-var device = express.Router();
+//var bodyParser  = require('body-parser');
 
-device.route('/')
+var user = express.Router();
+
+user.route('/')
    /*
     *   Request when APP is open
     */
-    .get( function( req, res )
+    .post( function( req, res )
     {
-        console.log(device);
+        console.log(req.body.username);
         res.json(
             {
                 user : "ryan"
@@ -15,4 +17,4 @@ device.route('/')
 
     });
 
-module.exports = device
+module.exports = user
