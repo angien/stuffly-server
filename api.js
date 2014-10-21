@@ -6,23 +6,17 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-var busboy = require('connect-busboy');
-app.use(busboy());
 
 var nconf = require('nconf');
 nconf.argv().env().file({ file: 'config.json' });
 
 var mongoose   = require('mongoose');
-mongoose.connect( nconf.get('database') );
+//mongoose.connect( nconf.get('database') );
 
 var port = process.env.PORT || 8000;
-var deviceRoute = require(__dirname +'/app/route/deviceRoute.js');
-var momentRoute = require(__dirname +'/app/route/momentRoute.js');
-var testRoute = require(__dirname +'/app/route/testRoute.js');
+var userRoute = require(__dirname + '/user');
 
-app.use('/api/moment', momentRoute);
-app.use('/api/device', deviceRoute);
-app.use('/api/test', testRoute);
+app.use('/api/user', userRoute);
 
 app.listen(port);
 
