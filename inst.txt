@@ -1,0 +1,5 @@
+to push to ec2:
+1. git add .
+2. git commit -m "message"
+3. eb push
+

@@ -1,3 +1,7 @@
+/*
+ * Author: Ryan Liao
+ */
+
 var express = require('express');
 var app     = express();
 var bodyParser  = require('body-parser');
@@ -10,7 +14,7 @@ app.use(bodyParser.urlencoded({
 var nconf = require('nconf');
 nconf.argv().env().file({ file: './config.json' });
 
-var mongoose   = require('mongoose');
+var mongoose = require('mongoose');
 mongoose.connect( nconf.get('database') );
 
 var port = process.env.PORT || 8000;
