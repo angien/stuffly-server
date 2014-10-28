@@ -1,5 +1,8 @@
-to push to ec2:
+to push to AWS
 1. git add .
 2. git commit -m "message"
 3. eb push
 
+commands:
+- eb init : start a new application on AWS
+- eb branch : switch branch on AWS remote branch
