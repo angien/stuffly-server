@@ -2,7 +2,8 @@ var express = require('express');
 var userRouter = express.Router();
 var userController = require('./userController');
 
-// GET localhost:8000/user
+// GET localhost:8000/api/user
+// 
 userRouter.route('/')
     .post(function(req, res)
     {
@@ -25,7 +26,7 @@ userRouter.route('/')
 
     });
 
-// localhost:8000/user/friends
+// localhost:8000/api/user/friends
 // userRouter.route('/friends')
 
 module.exports = userRouter;
