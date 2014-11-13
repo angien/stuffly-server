@@ -7,7 +7,7 @@ exports.createOneUser = function(res, req, next)
 		{
 			'firstname' :  req.body.firstname,
 			'lastname' : req.body.lastname,
-			'username' : req.body.username
+			'email' : req.body.email
 		};
 
 	var newUser = new userModel(newUserInfo);
@@ -17,4 +17,9 @@ exports.createOneUser = function(res, req, next)
 	// when this function finishes, "created_doc" in Router is then set to "next" 
 	// this Create in CRUD is in Controller instead of Model because Mongoose has already wrapped the raw 
 	// query as this create() function 
+};
+
+exports.getAll = function(res, req, next)
+{
+	userModel.find(next);
 };

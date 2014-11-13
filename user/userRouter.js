@@ -3,7 +3,26 @@ var userRouter = express.Router();
 var userController = require('./userController');
 
 // GET localhost:8000/api/user
-// 
+//
+userRouter.route('/')
+    .get(function(req, res)
+    {
+        return userController.getAll(res, req, function(err, docs)
+        {
+            if(err)
+            {
+                res.send("could not get all users");
+            }
+
+            else
+            {
+                res.json(docs);
+            }
+        });
+    });
+
+// POST localhost:8000/api/user
+//
 userRouter.route('/')
     .post(function(req, res)
     {
@@ -14,12 +33,11 @@ userRouter.route('/')
         {
         	if(err)
         	{
-        		res.status(status).send("could not create user");
+        		res.send("could not create user");
         	}
 
         	else
         	{
-
         		res.json(created_doc);
         	}
         });

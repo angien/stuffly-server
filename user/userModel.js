@@ -5,7 +5,7 @@ var userSchema = new schema(
 {
     firstname: String,
     lastname : String,
-    username: String
+    email: String
 });
 
 
