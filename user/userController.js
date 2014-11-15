@@ -1,7 +1,17 @@
 
 var userModel = require('./userModel'); 
 
-exports.createOneUser = function(res, req, next)
+exports.getAllUsers = function(req, res, next)
+{
+	userModel.find(next);
+};
+
+exports.getOneUser = function(req, res, next)
+{
+	userModel.findById(req.userid, next);
+};
+
+exports.createOneUser = function(req, res, next)
 {
 	var newUserInfo = 
 		{
@@ -19,7 +29,16 @@ exports.createOneUser = function(res, req, next)
 	// query as this create() function 
 };
 
-exports.getAll = function(res, req, next)
+exports.updateOneUser = function(req, res, next)
 {
-	userModel.find(next);
+	req.user_doc.firstname = req.body.firstname;
+	req.user_doc.lastname = req.body.lastname;
+	req.user_doc.email = req.body.email;
+	req.user_doc.save(next);
+	console.log(req.user_doc);
+};
+
+exports.deleteOneUser = function(req, res, next)
+{
+	req.user_doc.remove(next);
 };
