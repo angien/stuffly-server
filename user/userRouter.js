@@ -9,16 +9,12 @@ var userController = require('./userController');
 userRouter.param('userid', function(req, res, next, id) {
   req.userId = id;
 
-  userController.getOneUser(req, res, function(err, doc) {
+  userController.getOneUser(req, res, function(err, user) {
     if(err) {
       return next(err);
     }
 
-    if(!doc) {
-      return next(new Error("could not get user with id " + req.userId));
-    }
-
-    req.userDoc = doc;
+    req.userDoc = user;
     return next();
   });
 });
@@ -29,12 +25,11 @@ userRouter.param('userid', function(req, res, next, id) {
   Returns all users
  */
 userRouter.route('/').get(function(req, res) {
-  userController.getAllUsers(req, res, function(err, docs) {
+  userController.getAllUsers(req, res, function(err, users) {
     if(err) {
       res.send("could not get all users");
-    }
-    else {
-      res.json(docs);
+    } else {
+      res.json(users);
     }
   });
 });
@@ -45,9 +40,11 @@ userRouter.route('/').get(function(req, res) {
   Returns one user given the id
  */
 userRouter.route('/:userid').get(function(req, res) {
-  res.json(req.userDoc);
+  // Populate the posts array in the user document
+  req.userDoc.populate('posts', function(err, user) {
+    res.json(user);
+  });
 });
-
 
 /*
   POST
@@ -55,17 +52,16 @@ userRouter.route('/:userid').get(function(req, res) {
   Creates a new user given an input body of firstname, lastname, email
  */
 userRouter.route('/').post(function(req, res) {
-  /* function(err, createdDoc) is passed as "next" argument for createOneUser()
+  /* function(err, createdUser) is passed as "next" argument for createOneUser()
    defined in userController. This is usually referred as callback function.
-   In this case, function(err, createdDoc) must match the callback of Mongoose's create(). */
-  userController.createOneUser(req, res, function(err, createdDoc) {
+   In this case, function(err, createdUser) must match the callback of Mongoose's create(). */
+  userController.createOneUser(req, res, function(err, createdUser) {
     if(err) {
       res.send("could not create user");
+    } else {
+      res.json(createdUser);
     }
-    else {
-      res.json(createdDoc);
-    }
-  }); 
+  });
 });
 
 /*
@@ -75,12 +71,11 @@ userRouter.route('/').post(function(req, res) {
  */
 userRouter.route('/:userid').put(function(req, res) {
 
-  userController.updateOneUser(req, res, function(err, updatedDoc) {
+  userController.updateOneUser(req, res, function(err, updatedUser) {
     if(err) {
       res.send("could not update user with id " + req.userDoc._id);
-    }
-    else {
-      res.json(updatedDoc);
+    } else {
+      res.json(updatedUser);
     }
   });
 });
@@ -89,14 +84,14 @@ userRouter.route('/:userid').put(function(req, res) {
   DELETE
   /api/user/:userid
   Deletes a user given the id
+  TODO: Delete all the posts made by specified user
  */
 userRouter.route('/:userid').delete(function(req, res) {
-  userController.deleteOneUser(req, res, function(err, deletedDoc) {
+  userController.deleteOneUser(req, res, function(err, deletedUser) {
     if(err)  {
       res.send("could not find user to delete with id " + req.userDoc._id);
-    }
-    else {
-      res.json(deletedDoc);
+    } else {
+      res.json(deletedUser);
     }
   });
 });

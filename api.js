@@ -1,7 +1,7 @@
 /*
  * Author: Ryan Liao
  */
-
+"use strict";
 var express = require('express');
 var app     = express();
 var bodyParser  = require('body-parser');
@@ -19,8 +19,13 @@ mongoose.connect( nconf.get('database') );
 
 var userRouter = require(__dirname + '/user/userRouter');
 var postRouter = require(__dirname + '/post/postRouter');
+var locationRouter = require(__dirname + '/location/locationRouter');
+var categoryRouter = require(__dirname + '/category/categoryRouter');
+
 app.use('/api/user', userRouter);
-//app.use('/api/post', postRouter);
+app.use('/api/post', postRouter);
+app.use('/api/location', locationRouter);
+app.use('/api/category', categoryRouter);
 
 var port = process.env.PORT || 8000;
 app.listen(port);
