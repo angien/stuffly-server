@@ -14,8 +14,16 @@ exports.createOneCategory = function(req, res, next) {
     description: req.body.description
   };
 
-  var newCategory = new categoryModel(newCategoryInfo);
-  categoryModel.create(newCategory, next);
+  // Only create if the category name doesn't already exist in the DB
+  categoryModel.findOne({ 'name': newCategoryInfo.name }, function(err, categoryDoc) {
+    if(err || !categoryDoc) {
+      var newCategory = new categoryModel(newCategoryInfo);
+      categoryModel.create(newCategory, next);
+    } else {
+      // Return the category since it already exists
+      res.json(categoryDoc);
+    }
+  });
 };
 
 exports.updateOneCategory = function(req, res, next) {

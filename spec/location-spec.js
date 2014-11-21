@@ -33,7 +33,7 @@ describe("Location: POST GET PUT DELETE requests", function() {
   // Data to PUT a location
   var updatedLocationInfo = {
     "name": "MIT",
-    "": "Famed private research university founded in 1861",
+    "description": "Famed private research university founded in 1861",
     "address": {
       "street": "77 Massachusetts Ave",
       "city": "Cambridge",
@@ -91,9 +91,12 @@ describe("Location: POST GET PUT DELETE requests", function() {
     request(buildOptions(url + '/' + createdLocation._id, 'PUT', updatedLocationInfo), function(err, res, body) {
       var updatedLocation = JSON.parse(body);
 
-      expect(updatedLocation.firstname).toEqual(updatedLocationInfo.firstname);
-      expect(updatedLocation.lastname).toEqual(updatedLocationInfo.lastname);
-      expect(updatedLocation.email).toEqual(updatedLocationInfo.email);
+      expect(updatedLocation.name).toEqual(updatedLocationInfo.name);
+      expect(updatedLocation.description).toEqual(updatedLocationInfo.description);
+      expect(updatedLocation.address.street).toEqual(updatedLocationInfo.address.street);
+      expect(updatedLocation.address.city).toEqual(updatedLocationInfo.address.city);
+      expect(updatedLocation.address.state).toEqual(updatedLocationInfo.address.state);
+      expect(updatedLocation.address.zip).toEqual(updatedLocationInfo.address.zip);
 
       done();
     });

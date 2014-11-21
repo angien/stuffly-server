@@ -76,6 +76,7 @@ exports.deleteOneUser = function(req, res, next) {
           }
         );
       }
+      // Remove the actual post
       currPost.remove(function(err) {
         if(err) {
           console.log(err);

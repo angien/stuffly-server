@@ -80,7 +80,7 @@ categoryRouter.route('/:categoryid').put(function(req, res) {
   DELETE
   /api/category/:categoryid
   Deletes a category given the id
-  TODO: Delete all the posts in a specified category, also delete posts in users
+  TODO: Delete all the posts in a specified category, also delete posts in user, location
  */
 categoryRouter.route('/:categoryid').delete(function(req, res) {
   categoryController.deleteOneCategory(req, res, function(err, deletedCategory) {
