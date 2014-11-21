@@ -41,7 +41,9 @@ categoryRouter.route('/').get(function(req, res) {
  */
 categoryRouter.route('/:categoryid').get(function(req, res) {
   // Populate the posts array in the category document
-  res.json(req.categoryDoc);
+  req.categoryDoc.populate('posts', function(err, category) {
+    res.json(category);
+  });
 });
 
 /*

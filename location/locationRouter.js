@@ -40,7 +40,10 @@ locationRouter.route('/').get(function(req, res) {
   Returns one location given the id
  */
 locationRouter.route('/:locationid').get(function(req, res) {
-  res.json(req.locationDoc);
+  // Populate the posts array in the location document
+  req.locationDoc.populate('posts', function(err, location) {
+    res.json(location);
+  });
 });
 
 /*
