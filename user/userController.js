@@ -18,8 +18,17 @@ exports.createOneUser = function(req, res, next) {
     'email' : req.body.email
   };
 
-  var newUser = new userModel(newUserInfo);
-  userModel.create(newUser, next);
+  // If the user is already created, then just return the user
+  // Only create if the user if doesn't already exist in the DB
+  userModel.findOne({ 'email': newUserInfo.email }, function(err, userDoc) {
+    if(err || !userDoc) {
+      var newUser = new userModel(newUserInfo);
+      userModel.create(newUser, next);
+    } else {
+      // Return the already created location since it exists
+      res.json(userDoc);
+    }
+  });
 
   // Mongoose's create() sets "next" to create()'s callback, which is function(err, createdDoc)
   // when this function finishes, "createdDoc" in Router is then set to "next"
