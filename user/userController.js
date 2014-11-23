@@ -2,6 +2,7 @@ var userModel = require('./userModel');
 var postModel = require('../post/postModel');
 var locationModel = require('../location/locationModel');
 var categoryModel = require('../category/categoryModel');
+var offerModel = require('../offer/offerModel');
 
 exports.getAllUsers = function(req, res, next) {
   userModel.find(next);
@@ -25,7 +26,7 @@ exports.createOneUser = function(req, res, next) {
       var newUser = new userModel(newUserInfo);
       userModel.create(newUser, next);
     } else {
-      // Return the already created location since it exists
+      // Return the already created user since it exists
       res.json(userDoc);
     }
   });
@@ -88,11 +89,15 @@ exports.deleteOneUser = function(req, res, next) {
       // Remove the actual post
       currPost.remove(function(err) {
         if(err) {
-          console.log(err);
+          next(err);
         }
       });
     });
   }
+
+  // Removing all offers associated with the user
+  offerModel.find({ "offeredBy": userId }).remove().exec();
+
   // Finally, remove the user
   req.userDoc.remove(next);
 };

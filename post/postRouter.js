@@ -41,7 +41,7 @@ postRouter.route('/').get(function(req, res) {
  */
 postRouter.route('/:postid').get(function(req, res) {
   // Populate the user, categories array, and location in the post document
-  req.postDoc.populate('user categories location', function(err, post) {
+  req.postDoc.populate('user categories location offers', function(err, post) {
     res.json(post);
   });
 });

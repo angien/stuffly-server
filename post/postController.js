@@ -2,6 +2,7 @@ var postModel = require('./postModel');
 var userModel = require('../user/userModel');
 var locationModel = require('../location/locationModel');
 var categoryModel = require('../category/categoryModel');
+var offerModel = require('../offer/offerModel');
 
 exports.getAllPosts = function(req, res, next) {
   postModel.find(next);
@@ -99,7 +100,7 @@ exports.pullPostsFromModels = function(req, res) {
     { safe: true },
     function(err, model) {
       if(err) {
-        next(new Error("Could not remove post id from posts array in user"));
+        console.log(err);
       }
     }
   );
@@ -110,7 +111,7 @@ exports.pullPostsFromModels = function(req, res) {
     { safe: true },
     function(err, model) {
       if(err) {
-        next(new Error("Could not remove post id from posts array in location"));
+        console.log(err);
       }
     }
   );
@@ -122,7 +123,7 @@ exports.pullPostsFromModels = function(req, res) {
       { safe: true },
       function(err, model) {
         if(err) {
-          next(new Error("Could not remove post id from posts array in category"));
+          console.log(err);
         }
       }
     );

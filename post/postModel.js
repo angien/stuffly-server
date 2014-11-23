@@ -5,6 +5,7 @@ var currDate = Date.now();
 var userModel = require('../user/userModel');
 var locationModel = require('../location/locationModel');
 var categoryModel = require('../category/categoryModel');
+var offerModel = require('../offer/offerModel');
 
 var postSchema = new schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
@@ -13,6 +14,7 @@ var postSchema = new schema({
   price: Number,
   categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
   location: { type: mongoose.Schema.Types.ObjectId, ref: 'Location' },
+  offers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Offer' }],
   condition: String,
   created: { type: Date, default: currDate },
   updated: { type: Date, default: currDate }
@@ -36,8 +38,10 @@ postSchema.pre('remove', function(next) {
   var userId = this.user;
   var locationId = this.location;
   var categoryIds = this.categories;
+  var offerIds = this.offers;
   var thisPostId = this._id;
 
+  // Pull post from the user that this post belongs to
   userModel.findByIdAndUpdate(
     userId,
     { $pull: { 'posts': thisPostId } },
@@ -49,6 +53,7 @@ postSchema.pre('remove', function(next) {
     }
   );
 
+  // Pull posts from location that this post belongs to
   locationModel.findByIdAndUpdate(
     locationId,
     { $pull: { 'posts': thisPostId } },
@@ -60,6 +65,7 @@ postSchema.pre('remove', function(next) {
     }
   );
 
+  // Pull posts from categories that this post belongs to
   for(var idx = 0; idx < categoryIds.length; ++idx) {
     categoryModel.findByIdAndUpdate(
       categoryIds[idx],
@@ -71,6 +77,15 @@ postSchema.pre('remove', function(next) {
         }
       }
     );
+  }
+
+  // Delete offers for this post
+  for(var idx = 0; idx < offerIds.length; ++idx) {
+    offerModel.findByIdAndRemove(offerIds[idx], function(err, model) {
+      if(err) {
+        console.log(err);
+      }
+    });
   }
 
   next();
