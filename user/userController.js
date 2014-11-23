@@ -101,3 +101,10 @@ exports.deleteOneUser = function(req, res, next) {
   // Finally, remove the user
   req.userDoc.remove(next);
 };
+
+exports.getUserOffers = function(req, res, next) {
+  var userDoc = req.userDoc;
+  var userId = userDoc._id;
+
+  offerModel.find({ "offeredBy": userId }, next);
+};

@@ -96,7 +96,19 @@ userRouter.route('/:userid').delete(function(req, res) {
   });
 });
 
-// localhost:8000/api/user/:userid/friends
-// userRouter.route('/:userid/friends')
+/*
+  GET
+  /api/user/:userid/offers
+  Gets the offers this user has made
+ */
+userRouter.route('/:userid/offers').get(function(req, res) {
+  userController.getUserOffers(req, res, function(err, offerDocs) {
+    if(err) {
+      res.send("could not find offers for this user");
+    } else {
+      res.json(offerDocs);
+    }
+  });
+});
 
 module.exports = userRouter;
