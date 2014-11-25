@@ -27,6 +27,7 @@ exports.createOneLocation = function(req, res, next) {
       locationModel.create(newLocation, next);
     } else {
       // Return the already created location since it exists
+      locationDoc.statusCode = 409; // Duplication location status code, already created
       res.json(locationDoc);
     }
   });

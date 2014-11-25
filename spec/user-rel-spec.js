@@ -27,7 +27,8 @@ describe("User: DELETE requests result in posts deleted from other models", func
   var newUserInfo = {
     'firstname': 'Ryan',
     'lastname': 'Liao',
-    'email': 'rliao@ucsd.edu'
+    'email': 'rliao@ucsd.edu',
+    'password': "ryanpw"
   };
 
   // Set up by inserting user into db

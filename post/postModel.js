@@ -17,7 +17,8 @@ var postSchema = new schema({
   offers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Offer' }],
   condition: String,
   created: { type: Date, default: currDate },
-  updated: { type: Date, default: currDate }
+  updated: { type: Date, default: currDate },
+  imageUrl: String
 });
 
 // Updates the 'updated' field to current time during every save

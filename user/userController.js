@@ -16,7 +16,8 @@ exports.createOneUser = function(req, res, next) {
   var newUserInfo = {
     'firstname' : req.body.firstname,
     'lastname' : req.body.lastname,
-    'email' : req.body.email
+    'email' : req.body.email,
+    'password' : req.body.password
   };
 
   // If the user is already created, then just return the user
@@ -27,6 +28,7 @@ exports.createOneUser = function(req, res, next) {
       userModel.create(newUser, next);
     } else {
       // Return the already created user since it exists
+      userDoc.statusCode = 409; // Duplicate user status code
       res.json(userDoc);
     }
   });
@@ -37,10 +39,31 @@ exports.createOneUser = function(req, res, next) {
   // query as this create() function
 };
 
+exports.loginOneUser = function(req, res) {
+  var email = req.body.email;
+  var password = req.body.password;
+
+  if(!email || !password) {
+    res.send("Email or password incorrect");
+    return;
+  }
+
+  // Check if email and password can find user in db
+  userModel.findOne({ 'email': email, 'password': password }, function(err, userDoc) {
+    if(err || !userDoc) {
+      res.send("Email and password combo not found in db");
+    } else {
+      res.json(userDoc);
+    }
+  });
+};
+
 exports.updateOneUser = function(req, res, next) {
   req.userDoc.firstname = req.body.firstname;
   req.userDoc.lastname = req.body.lastname;
   req.userDoc.email = req.body.email;
+  req.userDoc.password = req.body.password;
+  req.userDoc.imageUrl = req.body.imageUrl;
   req.userDoc.save(next);
 };
 

@@ -21,6 +21,7 @@ exports.createOneCategory = function(req, res, next) {
       categoryModel.create(newCategory, next);
     } else {
       // Return the category since it already exists
+      categoryDoc.statusCode = 409; // Duplicate category status code
       res.json(categoryDoc);
     }
   });

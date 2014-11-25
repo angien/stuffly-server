@@ -49,7 +49,8 @@ userRouter.route('/:userid').get(function(req, res) {
 /*
   POST
   /api/user
-  Creates a new user given an input body of firstname, lastname, email
+  Creates a new user given an input body of firstname, lastname, email, password
+  Use this for registering users
  */
 userRouter.route('/').post(function(req, res) {
   /* function(err, createdUser) is passed as "next" argument for createOneUser()
@@ -65,9 +66,18 @@ userRouter.route('/').post(function(req, res) {
 });
 
 /*
+  POST
+  /api/user/login
+  Tries to login a user given input email and password
+ */
+userRouter.route('/login').post(function(req, res) {
+  userController.loginOneUser(req, res);
+});
+
+/*
   PUT
   /api/user/:userid
-  Updates an existing user given an input body of firstname, lastname, email
+  Updates an existing user given an input body of firstname, lastname, email, password, imageUrl
  */
 userRouter.route('/:userid').put(function(req, res) {
 
