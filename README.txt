@@ -1,8 +1,4 @@
-/*
- * Author: Ryan Liao
- *
- */
-
+Developers: Ryan Liao, Michael Luo
 
 Stuffly Server README
 

@@ -1,5 +1,5 @@
 /*
- * Author: Ryan Liao
+ * Author: Ryan Liao, Michael Luo
  */
 "use strict";
 var express = require('express');
