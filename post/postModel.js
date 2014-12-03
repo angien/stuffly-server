@@ -18,7 +18,8 @@ var postSchema = new schema({
   condition: String,
   created: { type: Date, default: currDate },
   updated: { type: Date, default: currDate },
-  imageUrl: String
+  imageUrl: String,
+  obo: String
 });
 
 // Updates the 'updated' field to current time during every save

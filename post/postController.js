@@ -21,7 +21,8 @@ exports.createOnePost = function(req, res, next) {
     'categories' : req.body.categories,
     'location' : req.body.location,
     'condition' : req.body.condition,
-    'imageUrl' : req.body.imageUrl
+    'imageUrl' : req.body.imageUrl,
+    'obo' : req.body.obo
   };
 
   var newPost = new postModel(newPostInfo);
@@ -39,6 +40,7 @@ exports.updateOnePost = function(req, res, next) {
   req.postDoc.condition = req.body.condition;
   req.postDoc.updated = Date.now();
   req.postDoc.imageUrl = req.body.imageUrl;
+  req.postDoc.obo = req.body.obo;
   req.postDoc.save(next);
 };
 
