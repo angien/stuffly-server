@@ -94,20 +94,34 @@
           </div>
 
           <h2 class="sub-header">Users</h2>
+          <div class="input-group"> <span class="input-group-addon">Filter</span>
+
+              <input id="filter" type="text" class="form-control" placeholder="Type here..."></input>
+          </div>
+          <br>
+
           <div class="table-responsive">
               <table class="table table-striped" data-toggle="table" data-url="/api/user" >
                 <thead>
                     <tr>
+
+                      
                         <th data-field="firstname" data-sortable="true">First Name</th>
                         <th data-field="lastname" data-sortable="true">Last Name</th>
                         <th data-field="email" data-sortable="true">Email</th>
                         <th data-field="posts.length" data-sortable="true">Number of Posts</th>
+                      <tbody class="searchable"></tbody>
                     </tr>
                 </thead>
               </table>
           </div>
 
            <h2 class="sub-header">Posts</h2>
+            <div class="input-group"> <span class="input-group-addon">Filter</span>
+
+              <input id="filter2" type="text" class="form-control" placeholder="Type here..."></input>
+          </div>
+          <br>
           <div class="table-responsive">
               <table class="table table-striped" data-toggle="table" data-url="/api/post">
                 <thead>
@@ -116,6 +130,7 @@
                         <th data-field="description">Description</th>
                         <th data-field="price" data-sortable="true">Price</th>
                         <th data-field="condition">Condition</th>
+                        <tbody class="searchable2"></tbody>
                     </tr>
                 </thead>
               </table>
@@ -145,6 +160,33 @@
         });
       });
 
+      $(document).ready(function () {
+
+          (function ($) {
+
+              $('#filter').keyup(function () {
+
+                  var rex = new RegExp($(this).val(), 'i');
+                  $('.searchable tr').hide();
+                  $('.searchable tr').filter(function () {
+                      return rex.test($(this).text());
+                  }).show();
+
+              })
+
+              $('#filter2').keyup(function () {
+
+                  var rex = new RegExp($(this).val(), 'i');
+                  $('.searchable2 tr').hide();
+                  $('.searchable2 tr').filter(function () {
+                      return rex.test($(this).text());
+                  }).show();
+
+              })
+
+          }(jQuery));
+
+      });
       
       
     </script>
