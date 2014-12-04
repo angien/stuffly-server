@@ -1,7 +1,7 @@
 var userModel = require('./userModel');
 var postModel = require('../post/postModel');
-var locationModel = require('../location/locationModel');
-var categoryModel = require('../category/categoryModel');
+// var locationModel = require('../location/locationModel');
+// var categoryModel = require('../category/categoryModel');
 var offerModel = require('../offer/offerModel');
 
 exports.getAllUsers = function(req, res, next) {
@@ -81,34 +81,34 @@ exports.deleteOneUser = function(req, res, next) {
         console.log(err);
       }
 
-      var locationId = currPost.location;
-      var categoryIds = currPost.categories;
+      // var locationId = currPost.location;
+      // var categoryIds = currPost.categories;
 
-      // Remove post id from location docs
-      locationModel.findByIdAndUpdate(
-        locationId,
-        { $pull: { 'posts': currPostId } },
-        { safe: true },
-        function(err, model) {
-          if(err) {
-            next(new Error("Could not remove post id from posts array in location"));
-          }
-        }
-      );
+      // // Remove post id from location docs
+      // locationModel.findByIdAndUpdate(
+      //   locationId,
+      //   { $pull: { 'posts': currPostId } },
+      //   { safe: true },
+      //   function(err, model) {
+      //     if(err) {
+      //       next(new Error("Could not remove post id from posts array in location"));
+      //     }
+      //   }
+      // );
 
-      // Remove post id from all category docs
-      for(var idx = 0; idx < categoryIds.length; ++idx) {
-        categoryModel.findByIdAndUpdate(
-          categoryIds[idx],
-          { $pull: { 'posts': currPostId } },
-          { safe: true },
-          function(err, model) {
-            if(err) {
-              next(new Error("Could not remove post id from posts array in category"));
-            }
-          }
-        );
-      }
+      // // Remove post id from all category docs
+      // for(var idx = 0; idx < categoryIds.length; ++idx) {
+      //   categoryModel.findByIdAndUpdate(
+      //     categoryIds[idx],
+      //     { $pull: { 'posts': currPostId } },
+      //     { safe: true },
+      //     function(err, model) {
+      //       if(err) {
+      //         next(new Error("Could not remove post id from posts array in category"));
+      //       }
+      //     }
+      //   );
+      // }
       // Remove the actual post
       currPost.remove(function(err) {
         if(err) {

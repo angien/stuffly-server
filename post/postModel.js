@@ -3,8 +3,8 @@ var schema = mongoose.Schema;
 var currDate = Date.now();
 
 var userModel = require('../user/userModel');
-var locationModel = require('../location/locationModel');
-var categoryModel = require('../category/categoryModel');
+// var locationModel = require('../location/locationModel');
+// var categoryModel = require('../category/categoryModel');
 var offerModel = require('../offer/offerModel');
 
 var postSchema = new schema({
@@ -12,8 +12,10 @@ var postSchema = new schema({
   title: String,
   description: String,
   price: Number,
-  categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
-  location: { type: mongoose.Schema.Types.ObjectId, ref: 'Location' },
+  category: String,
+  location: String,
+  // categories: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
+  // location: { type: mongoose.Schema.Types.ObjectId, ref: 'Location' },
   offers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Offer' }],
   condition: String,
   created: { type: Date, default: currDate },
@@ -55,31 +57,31 @@ postSchema.pre('remove', function(next) {
     }
   );
 
-  // Pull posts from location that this post belongs to
-  locationModel.findByIdAndUpdate(
-    locationId,
-    { $pull: { 'posts': thisPostId } },
-    { safe: true },
-    function(err, model) {
-      if(err) {
-        next(new Error("Could not remove post id from posts array in location"));
-      }
-    }
-  );
+  // // Pull posts from location that this post belongs to
+  // locationModel.findByIdAndUpdate(
+  //   locationId,
+  //   { $pull: { 'posts': thisPostId } },
+  //   { safe: true },
+  //   function(err, model) {
+  //     if(err) {
+  //       next(new Error("Could not remove post id from posts array in location"));
+  //     }
+  //   }
+  // );
 
-  // Pull posts from categories that this post belongs to
-  for(var idx = 0; idx < categoryIds.length; ++idx) {
-    categoryModel.findByIdAndUpdate(
-      categoryIds[idx],
-      { $pull: { 'posts': thisPostId } },
-      { safe: true },
-      function(err, model) {
-        if(err) {
-          next(new Error("Could not remove post id from posts array in category"));
-        }
-      }
-    );
-  }
+  // // Pull posts from categories that this post belongs to
+  // for(var idx = 0; idx < categoryIds.length; ++idx) {
+  //   categoryModel.findByIdAndUpdate(
+  //     categoryIds[idx],
+  //     { $pull: { 'posts': thisPostId } },
+  //     { safe: true },
+  //     function(err, model) {
+  //       if(err) {
+  //         next(new Error("Could not remove post id from posts array in category"));
+  //       }
+  //     }
+  //   );
+  // }
 
   // Delete offers for this post
   for(var idx = 0; idx < offerIds.length; ++idx) {
