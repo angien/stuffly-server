@@ -40,10 +40,11 @@ userRouter.route('/').get(function(req, res) {
   Returns one user given the id
  */
 userRouter.route('/:userid').get(function(req, res) {
+  res.json(req.userDoc);
   // Populate the posts array in the user document
-  req.userDoc.populate('posts', function(err, user) {
-    res.json(user);
-  });
+  // req.userDoc.populate('posts', function(err, user) {
+  //   res.json(user);
+  // });
 });
 
 /*
@@ -117,6 +118,21 @@ userRouter.route('/:userid/offers').get(function(req, res) {
       res.send("could not find offers for this user");
     } else {
       res.json(offerDocs);
+    }
+  });
+});
+
+/*
+  GET
+  /api/user/:userid/posts
+  Gets the posts that this user has made
+*/
+userRouter.route('/:userid/posts').get(function(req, res) {
+  userController.getUserPosts(req, res, function(err, postDocs) {
+    if(err) {
+      res.send("could not find posts for this user");
+    } else {
+      res.json(postDocs);
     }
   });
 });

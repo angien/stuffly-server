@@ -29,7 +29,7 @@ exports.createOneUser = function(req, res, next) {
     } else {
       // Return the already created user since it exists
       userDoc.statusCode = 409; // Duplicate user status code
-      res.json(userDoc);
+      res.status(409).json(userDoc);
     }
   });
 
@@ -131,3 +131,10 @@ exports.getUserOffers = function(req, res, next) {
 
   offerModel.find({ "offeredBy": userId }, next);
 };
+
+exports.getUserPosts = function(req, res, next) {
+  var userDoc = req.userDoc;
+  var userId = userDoc._id;
+
+  postModel.find({ "user": userId }, next);
+}
