@@ -131,3 +131,10 @@ exports.getUserOffers = function(req, res, next) {
 
   offerModel.find({ "offeredBy": userId }, next);
 };
+
+exports.getUserPosts = function(req, res, next) {
+  var userDoc = req.userDoc;
+  var userId = userDoc._id;
+
+  postModel.find({ "user": userId }, next);
+}

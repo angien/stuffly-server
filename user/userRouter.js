@@ -122,4 +122,19 @@ userRouter.route('/:userid/offers').get(function(req, res) {
   });
 });
 
+/*
+  GET
+  /api/user/:userid/posts
+  Gets the posts that this user has made
+*/
+userRouter.route('/:userid/posts').get(function(req, res) {
+  userController.getUserPosts(req, res, function(err, postDocs) {
+    if(err) {
+      res.send("could not find posts for this user");
+    } else {
+      res.json(postDocs);
+    }
+  });
+});
+
 module.exports = userRouter;
