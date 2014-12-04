@@ -29,7 +29,7 @@ exports.createOneUser = function(req, res, next) {
     } else {
       // Return the already created user since it exists
       userDoc.statusCode = 409; // Duplicate user status code
-      res.json(userDoc);
+      res.status(409).json(userDoc);
     }
   });
 
