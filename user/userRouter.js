@@ -40,10 +40,11 @@ userRouter.route('/').get(function(req, res) {
   Returns one user given the id
  */
 userRouter.route('/:userid').get(function(req, res) {
+  res.json(req.userDoc);
   // Populate the posts array in the user document
-  req.userDoc.populate('posts', function(err, user) {
-    res.json(user);
-  });
+  // req.userDoc.populate('posts', function(err, user) {
+  //   res.json(user);
+  // });
 });
 
 /*

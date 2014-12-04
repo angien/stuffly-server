@@ -5,6 +5,7 @@ var userUrl = "http://localhost:8000/api/user";
 var locationUrl = "http://localhost:8000/api/location";
 var categoryUrl = "http://localhost:8000/api/category";
 var postUrl = "http://localhost:8000/api/post";
+var offerUrl = "http://localhost:8000/api/offer";
 
 // Return json of options for http requests
 var buildOptions = function(url, method, form) {
@@ -24,12 +25,14 @@ describe("Populating DB", function() {
   var initialLocations = [];
   var initialCategories = [];
   var initialPosts = [];
+  var initialOffers = [];
 
   // Holds the created objects
   var createdUsers = [];
   var createdLocations = [];
   var createdCategories = [];
   var createdPosts = [];
+  var createdOffers = [];
 
   // Data to POST users
   var newUserInfos = [{
@@ -302,6 +305,19 @@ describe("Populating DB", function() {
     "locationIndex": 0
   }];
 
+  // Data to POST offers
+  var newOfferInfos = [{
+    buildOffer: function(offeredBy, offeredTo) {
+      return {
+        "offeredBy": offeredBy,
+        "offeredTo": offeredTo,
+        "price": 10
+      };
+    },
+    "userIndex": 0,
+    "postIndex": 0
+  }];
+
 
   it("Delete users from database", function(done) {
     // Get all users that we want to delete
@@ -393,6 +409,29 @@ describe("Populating DB", function() {
     }); // End GET request
   });
 
+  it("Delete offers from database", function(done) {
+    // Get all offers that we want to delete
+    request(buildOptions(offerUrl, "GET"), function(err, res, body) {
+      initialOffers = JSON.parse(body);
+
+      if(initialOffers.length > 0) {
+        // Delete the offers we retrieved
+        for(var idx = 0; idx < initialOffers.length; ++idx) {
+          request(buildOptions(offerUrl + "/" + initialOffers[idx]._id, "DELETE"), function(err, res, body) {
+            // We have finished deleting the last offer
+            if(idx == initialOffers.length) {
+              done();
+            }
+          }); // End DELETE request
+        } // End deleting loop
+      }
+      // Nothing to delete
+      else {
+        done();
+      }
+    }); // End GET request
+  });
+
   it("Insert users into database", function(done) {
     for(var idx2 = 0; idx2 < newUserInfos.length; ++idx2) {
       request(buildOptions(userUrl, "POST", newUserInfos[idx2]), function(err, res, body) {
@@ -453,6 +492,30 @@ describe("Populating DB", function() {
 
         // We have finished adding the posts
         if(idx2 == newPostInfos.length) {
+          done();
+        }
+      }); // End POST request
+    } // End inserting loop
+  });
+
+  it("Insert offers into database", function(done) {
+    for(var idx2 = 0; idx2 < newOfferInfos.length; ++idx2) {
+      // Build the new offer
+      var offer = newOfferInfos[idx2];
+
+      var userIdx = offer.userIndex;
+      var postIdx = offer.postIndex;
+
+      var newOffer = offer.buildOffer(
+        createdUsers[userIdx]._id,
+        createdPosts[postIdx]._id
+      );
+
+      request(buildOptions(offerUrl, "POST", newOffer), function(err, res, body) {
+        createdUsers.push(JSON.parse(body));
+
+        // We have finished adding the offers
+        if(idx2 == newOfferInfos.length) {
           done();
         }
       }); // End POST request

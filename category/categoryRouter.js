@@ -40,10 +40,11 @@ categoryRouter.route('/').get(function(req, res) {
   Returns one category given the id
  */
 categoryRouter.route('/:categoryid').get(function(req, res) {
+  res.json(req.categoryDoc);
   // Populate the posts array in the category document
-  req.categoryDoc.populate('posts', function(err, category) {
-    res.json(category);
-  });
+  // req.categoryDoc.populate('posts', function(err, category) {
+  //   res.json(category);
+  // });
 });
 
 /*
