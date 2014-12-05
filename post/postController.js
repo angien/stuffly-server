@@ -1,7 +1,7 @@
 var postModel = require('./postModel');
 var userModel = require('../user/userModel');
-var locationModel = require('../location/locationModel');
-var categoryModel = require('../category/categoryModel');
+// var locationModel = require('../location/locationModel');
+// var categoryModel = require('../category/categoryModel');
 var offerModel = require('../offer/offerModel');
 
 exports.getAllPosts = function(req, res, next) {
@@ -18,7 +18,7 @@ exports.createOnePost = function(req, res, next) {
     'title' : req.body.title,
     'description' : req.body.description,
     'price' : req.body.price,
-    'categories' : req.body.categories,
+    'category' : req.body.category,
     'location' : req.body.location,
     'condition' : req.body.condition,
     'imageUrl' : req.body.imageUrl,
@@ -35,7 +35,7 @@ exports.updateOnePost = function(req, res, next) {
   req.postDoc.title = req.body.title;
   req.postDoc.description = req.body.description;
   req.postDoc.price = req.body.price;
-  req.postDoc.categories = req.body.categories;
+  req.postDoc.category = req.body.category;
   req.postDoc.location = req.body.location;
   req.postDoc.condition = req.body.condition;
   req.postDoc.updated = Date.now();
@@ -63,34 +63,34 @@ exports.populateUserModelPosts = function(req, res) {
 };
 
 // Find the location model given the location's id and then push the post id to location's posts array
-exports.populateLocationModelPosts = function(req, res) {
-  locationModel.findByIdAndUpdate(
-    req.locationId,
-    { $push: { 'posts': req.postId } },
-    { safe: true, upsert: true },
-    function(err, model) {
-      if(err) {
-        console.log(err);
-      }
-    }
-  );
-};
+// exports.populateLocationModelPosts = function(req, res) {
+//   locationModel.findByIdAndUpdate(
+//     req.locationId,
+//     { $push: { 'posts': req.postId } },
+//     { safe: true, upsert: true },
+//     function(err, model) {
+//       if(err) {
+//         console.log(err);
+//       }
+//     }
+//   );
+// };
 
 // Find the category model given the category's id and then push the post id to category's posts array
-exports.populateCategoriesModelPosts = function(req, res) {
-  for(var idx = 0; idx < req.categoryIds.length; ++idx) {
-    categoryModel.findByIdAndUpdate(
-      req.categoryIds[idx],
-      { $push: { 'posts': req.postId } },
-      { safe: true, upsert: true },
-      function(err, model) {
-        if(err) {
-          console.log(err);
-        }
-      }
-    );
-  }
-};
+// exports.populateCategoriesModelPosts = function(req, res) {
+//   for(var idx = 0; idx < req.categoryIds.length; ++idx) {
+//     categoryModel.findByIdAndUpdate(
+//       req.categoryIds[idx],
+//       { $push: { 'posts': req.postId } },
+//       { safe: true, upsert: true },
+//       function(err, model) {
+//         if(err) {
+//           console.log(err);
+//         }
+//       }
+//     );
+//   }
+// };
 
 exports.pullPostsFromModels = function(req, res) {
   var userId = req.postDoc.user;
@@ -109,27 +109,27 @@ exports.pullPostsFromModels = function(req, res) {
     }
   );
 
-  locationModel.findByIdAndUpdate(
-    locationId,
-    { $pull: { 'posts': thisPostId } },
-    { safe: true },
-    function(err, model) {
-      if(err) {
-        console.log(err);
-      }
-    }
-  );
+  // locationModel.findByIdAndUpdate(
+  //   locationId,
+  //   { $pull: { 'posts': thisPostId } },
+  //   { safe: true },
+  //   function(err, model) {
+  //     if(err) {
+  //       console.log(err);
+  //     }
+  //   }
+  // );
 
-  for(var idx = 0; idx < categoryIds.length; ++idx) {
-    categoryModel.findByIdAndUpdate(
-      categoryIds[idx],
-      { $pull: { 'posts': thisPostId } },
-      { safe: true },
-      function(err, model) {
-        if(err) {
-          console.log(err);
-        }
-      }
-    );
-  }
+  // for(var idx = 0; idx < categoryIds.length; ++idx) {
+  //   categoryModel.findByIdAndUpdate(
+  //     categoryIds[idx],
+  //     { $pull: { 'posts': thisPostId } },
+  //     { safe: true },
+  //     function(err, model) {
+  //       if(err) {
+  //         console.log(err);
+  //       }
+  //     }
+  //   );
+  // }
 };

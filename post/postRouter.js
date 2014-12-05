@@ -41,7 +41,10 @@ postRouter.route('/').get(function(req, res) {
  */
 postRouter.route('/:postid').get(function(req, res) {
   // Populate the user, categories array, and location in the post document
-  req.postDoc.populate('user categories location offers', function(err, post) {
+  // req.postDoc.populate('user categories location offers', function(err, post) {
+  //   res.json(post);
+  // });
+  req.postDoc.populate('user offers', function(err, post) {
     res.json(post);
   });
 });
@@ -65,11 +68,11 @@ postRouter.route('/').post(function(req, res) {
 
       // Get the location connected to this post so we can push to location's posts array
       req.locationId = createdPost.location;
-      postController.populateLocationModelPosts(req, res);
+      //postController.populateLocationModelPosts(req, res);
 
       // Get the categories connected to this post so we can push to each category's array
       req.categoryIds = createdPost.categories;
-      postController.populateCategoriesModelPosts(req, res);
+      //postController.populateCategoriesModelPosts(req, res);
 
       // Return the created post while the populate*ModelPosts functions asynchronously execute
       res.json(createdPost);
@@ -99,11 +102,11 @@ postRouter.route('/:postid').put(function(req, res) {
 
       // Get the location connected to this post so we can update it
       req.locationId = updatedPost.location;
-      postController.populateLocationModelPosts(req, res);
+      //postController.populateLocationModelPosts(req, res);
 
       // Get the categories connected to this post so we can update it
       req.categoryIds = updatedPost.categories;
-      postController.populateCategoriesModelPosts(req, res);
+      //postController.populateCategoriesModelPosts(req, res);
 
       res.json(updatedPost);
     }
