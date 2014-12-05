@@ -43,14 +43,21 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Dashboard</a></li>
             <li><a href="#">Settings</a></li>
             <li><a href="#">Profile</a></li>
             <li><a href="#">Help</a></li>
           </ul>
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
+          <div class="userinfo">
+          <form id ="login" class="navbar-form navbar-right">
+            <input type="text" id="em" class="form-control" placeholder="Login">
+            <input type="text" id="pw" class="form-control" placeholder="Password">
+            <!-- Single button -->
+            <div class="btn-group" role="group" aria-label="...">
+              <button type="button" class="btn btn-success" onclick="login()">Login</button>
+              <button type="button" class="btn btn-success" onclick="login()">Register</button>
+            </div>
           </form>
+          </div>
         </div>
       </div>
     </nav>
@@ -60,25 +67,22 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Reports</a></li>
-            <li><a href="#">Analytics</a></li>
+            <li><a href="#">Google Analytics</a></li>
             <li><a href="#">Export</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="">Nav item</a></li>
             <li><a href="">Nav item again</a></li>
             <li><a href="">One more nav</a></li>
             <li><a href="">Another nav item</a></li>
             <li><a href="">More navigation</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
+            <li><a href="">GitHub</a></li>
+            <li><a href="">Mingle</a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Dashboard</h1>
+          <h1 class="page-header">Welcome, null!</h1>
 
           <div class="row placeholders">
             <div class="col-xs-6 col-sm-3 placeholder">
@@ -147,18 +151,28 @@
     <!-- Placed at the end of the document so the pages load faster -->
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
      <script>
+     window.localStorage.getItem("userinfo");
+      console.log("Found id " + window.localStorage.getItem("userinfo"));
+   if (window.localStorage.getItem("userinfo") != null) {
+
+    $("div.userinfo").html("<form id ='login' class='navbar-form navbar-right'><input type='text' id='em' class='form-control' placeholder='Login'><input type='text' id='pw' class='form-control' placeholder='Password'><div class='btn-group' role='group' aria-label='...'><button type='button' class='btn btn-success' onclick='login()'>Login</button><button type='button' class='btn btn-success' onclick='login()'>Register</button></div></form>");
+     }
+
+
       $.getJSON( "/api/user", function (data) {
         $('#users').attr({
-          "data-src": "holder.js/200x200/sky/text:" + data.length
+          "data-src": "holder.js/200x200/big/sky/text:" + data.length
         });
         Holder.run({images: "#users"});
         $.getJSON( "/api/post", function (data) {
           $('#posts').attr({
-            "data-src": "holder.js/200x200/vine/text:" + data.length
+            "data-src": "holder.js/200x200/big/vine/text:" + data.length
           });
           Holder.run({images: "#posts"});
         });
       });
+
+
 
       $(document).ready(function () {
 
@@ -186,8 +200,26 @@
 
           }(jQuery));
 
+
+
+
       });
-      
+
+      function login() {
+        $.getJSON( "/api/user", function (data) {
+          var flag = false;
+          data.forEach(function(entry) {
+            //alert("Password" + entry.password);
+            if(entry.email == $('#em')[0].value && entry.password == $('#pw')[0].value) {
+              flag = true;
+              window.localStorage.setItem("userid", entry._id);
+              console.log(window.localStorage.getItem("userid") + " has been stored");
+            } 
+          });
+
+        });
+      }
+
       
     </script>
     
