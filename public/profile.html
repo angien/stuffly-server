@@ -17,7 +17,6 @@
   <!-- Bootstrap core CSS -->
   <link href="css/bootstrap-3.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/bootstrap-3.3.1/bootstrap-table/dist/bootstrap-table.min.css">
-  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lobster">
 
   <!-- Custom styles for this template -->
   <link href="css/dashboard.css" rel="stylesheet">
@@ -40,7 +39,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <div class="logo"><a class="navbar-brand" href="index.html">stuffly</a></div>
+            <a class="navbar-brand" href="index.html">stuffly</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -69,89 +68,66 @@
         </div>
       </nav>
 
-      <div class="container-fluid">
+       <div class="container-fluid">
         <div class="row">
           <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-              <li class="active"><a href="index.html">Dashboard <span class="sr-only">(current)</span></a></li>
-              <li><a href="profile.html">Profile</a></li>
+              <li><a href="index.html">Dashboard</a></li>
+              <li class="active"><a href="profile.html">Profile <span class="sr-only">(current)</span></a></li>
             </ul>
-            <ul class="nav nav-sidebar">
+              <ul class="nav nav-sidebar">
               <li><a href=""><span class='glyphicon glyphicon-save' aria-hidden='true'></span> Download</a></li>
               <li><a href="#">Features</a></li>
               <li><a href="#">Documentation</a></li>
             </ul>
-
-
             <ul class="nav nav-sidebar">
               <li><a href="#"><span class='glyphicon glyphicon-new-window' aria-hidden='true'></span> Google Analytics</a></li>
               <li><a href="https://stuffly.mingle.thoughtworks.com/projects/stuffly" target="0"><span class='glyphicon glyphicon-new-window' aria-hidden='true'></span> Mingle</a></li>
             </ul>
           </div>
 
-
           <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Welcome<span id="user_firstname"></span>!</h1>
+            <h1 class="page-header"><span id="user_firstname">Please log in to view your profile.</span></h1>
+<div id="changeStatus"></div>
 
-            <div class="row placeholders">
-              <div class="col-xs-6 col-sm-3 placeholder">
-                <img id="users">
-                <h4>Users</h4>
-                <span class="text-muted">The number of stuffers</span>
+            <form class="form-horizontal" role="form" id="profileForm" style="display:none">
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">First Name</label>
+                <div class="col-sm-10">
+                  <input type="email" class="form-control" id="firstname" placeholder="First Name">
+                </div>
               </div>
-              <div class="col-xs-6 col-sm-3 placeholder">
-                <img id="posts">
-                <h4>Posts</h4>
-                <span class="text-muted">The number of stuffs</span>
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Last Name</label>
+                <div class="col-sm-10">
+                  <input type="email" class="form-control" id="lastname" placeholder="Last name">
+                </div>
               </div>
-              <div class='col-xs-6 col-sm-3 placeholder' id="mypostcircle" style="display:none">
-                <img id='myposts'>
-                <h4>My Posts</h4>
-                <span class='text-muted'>The number of stuffs you've made</span>
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-10">
+                  <input type="email" class="form-control" id="email" placeholder="Email">
+                </div>
               </div>
-            </div>
+              <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                  <input type="password" class="form-control" id="password" placeholder="Password">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button type="button" class="btn btn-default" onclick="saveChanges()">Save Changes</button>
+                </div>
+              </div>
+            </form>
+          
 
-            <div id="myposts_header" style="display:none"><h2 class='sub-header'>My Posts</h2>
-            <div class="table-responsive">
-              <table id="mypost_table" ></table>
-            </div>
-          </div>
+          
 
-            <h2 class="sub-header">Users</h2>
-            <div class="table-responsive">
-              <table class="table table-striped" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-toggle="table" data-url="/api/user" >
-                <thead>
-                  <tr>
-                    <th data-field="firstname" data-sortable="true">First Name</th>
-                    <th data-field="lastname" data-sortable="true">Last Name</th>
-                    <th data-field="email" data-sortable="true">Email</th>
-                    <th data-field="posts.length" data-sortable="true">Number of Posts</th>
-                    <tbody class="searchable"></tbody>
-                  </tr>
-                </thead>
-              </table>
-            </div>
-
-            <h2 class="sub-header">Posts</h2>
-            <div class="table-responsive">
-              <table class="table table-striped" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-toggle="table" data-url="/api/post">
-                <thead>
-                  <tr>
-                    <th data-field="title" data-sortable="true">Title</th>
-                    <th data-field="description" data-sortable="true">Description</th>
-                    <th data-field="price" data-sortable="true">Price</th>
-                    <th data-field="condition" data-sortable="true">Condition</th>
-                    <tbody class="searchable2"></tbody>
-                  </tr>
-                </thead>
-              </table>
-            </div>
-
-
-
-          </div>
         </div>
       </div>
+    </div>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -160,84 +136,54 @@
     <script src="js/login.js"></script>
     <script>
 
-    console.log(getCookie("userid"));
     // WHEN USER IS LOGGED IN!
 
+    console.log(getCookie("userid"));
+
     if (getCookie("userid") != "") {
+      console.log(getCookie("userid"));
       // show login
       $("#userinfo").html("<form id ='login' class='navbar-form navbar-right'><button type='button' class='btn btn-success' onclick='logout()'>Logout</button></div></form>");
 
-      $("#myposts_header").show();
+      // show change form
+      $("#profileForm").show();
 
       // get json object for user
       $.getJSON( "/api/user/" + getCookie("userid"), function (data) {
 
         // show their user name
-        $("#user_firstname").text(", " + data.firstname);
+        $("#user_firstname").text("Welcome, " + data.firstname + "!");
+        $("#firstname").attr("value", data.firstname);
+        $("#lastname").attr("value", data.lastname);
+        $("#email").attr("value", data.email);
+        $("#password").attr("value", data.password);
         
-        // set up my posts
-        $('#mypost_table').bootstrapTable({
-          method: 'get',
-          url: '/api/user/' + data._id+'/posts',
-          cache: false,
-          striped: true,
-          search: true,
-          showColumns: true,
-          showRefresh: true,
-          showToggle: true,
-          minimumCountColumns: 2,
-          columns: [{
-            field: 'title',
-            title: 'Title',
-            sortable: true
-          }, {
-            field: 'description',
-            title: 'Description',
-            sortable: true
-            
-          }, {
-            field: 'price',
-            title: 'Price',
-            
-            sortable: true
-          }, {
-            field: 'condition',
-            title: 'Condition',
-            sortable: true
-            
-          }]
-        });
 
 
-        // circle stuff for my posts
-        $.getJSON( "/api/user/"+data._id+"/posts", function (data) {
-
-          $('#mypostcircle').show();
-          $('#myposts').attr({
-           "data-src": "holder.js/200x200/big/sky/text:" + data.length
-         });
-          Holder.run({images: "#myposts"});
-        });
       });
+
+
+
+
 
     }
 
 
-    // set up json circles
-    $.getJSON( "/api/user", function (data) {
-      $('#users').attr({
-        "data-src": "holder.js/200x200/big/sky/text:" + data.length
-      });
-      Holder.run({images: "#users"});
-      $.getJSON( "/api/post", function (data) {
-        $('#posts').attr({
-          "data-src": "holder.js/200x200/big/vine/text:" + data.length
-        });
-        Holder.run({images: "#posts"});
-      });
-    });
+    function saveChanges() {
 
+      console.log("{\"firstname\":\"" + $('#firstname')[0].value + "\",\"lastname\":\"" + $('#lastname')[0].value + "\",\"email\":\"" + $('#email')[0].value + "\",\"password\":\"" + $('#password')[0].value +"\"}");
 
+      $.ajax({
+        url: '/api/user/' + getCookie("userid"),
+        type: 'PUT',
+        headers: {'Content-Type':'application/json'},
+        data: "{\"firstname\":\"" + $('#firstname')[0].value + "\",\"lastname\":\"" + $('#lastname')[0].value + "\",\"email\":\"" + $('#email')[0].value + "\",\"password\":\"" + $('#password')[0].value +"\"}",
+        success: function(result) {
+          $("#changeStatus").html("<div class='alert alert-success' role='alert'>Your changes were saved!</div>");
+          setTimeout("location.reload();", 3000);
+        }
+      });
+    }
 
     </script>
     
