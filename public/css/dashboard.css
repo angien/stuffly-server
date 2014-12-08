@@ -20,6 +20,13 @@ body {
      text-shadow: 2px 2px #000000;
 }
 
+.logo-b a {
+    font-family: 'Pacifico', cursive;
+    font-size: 150px;
+    color: #666;
+     text-shadow: 3px 3px #000000;
+}
+
 /*
  * Global add-ons
  */
