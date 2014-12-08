@@ -126,13 +126,58 @@ userRouter.route('/:userid/offers').get(function(req, res) {
   GET
   /api/user/:userid/posts
   Gets the posts that this user has made
-*/
+ */
 userRouter.route('/:userid/posts').get(function(req, res) {
   userController.getUserPosts(req, res, function(err, postDocs) {
     if(err) {
       res.send("could not find posts for this user");
     } else {
       res.json(postDocs);
+    }
+  });
+});
+
+/*
+  GET
+  /api/user/:userid/messages/created
+  Gets the messages that this user has made
+ */
+userRouter.route('/:userid/messages/created').get(function(req, res) {
+  userController.getUserMessagesCreated(req, res, function(err, messageDocs) {
+    if(err) {
+      res.send("could not find messages that this user created");
+    } else {
+      res.json(messageDocs);
+    }
+  });
+});
+
+/*
+  GET
+  /api/user/:userid/messages/received
+  Gets the messages that this user has received
+ */
+userRouter.route('/:userid/messages/received').get(function(req, res) {
+  userController.getUserMessagesReceived(req, res, function(err, messageDocs) {
+    if(err) {
+      res.send("could not find messages that this user received");
+    } else {
+      res.json(messageDocs);
+    }
+  });
+});
+
+/*
+ GET
+ /api/user/:userid/messages
+ Gets all messages that this user is involved in
+ */
+userRouter.route('/:userid/messages').get(function(req, res) {
+  userController.getUserMessages(req, res, function(err, messageDocs) {
+    if(err) {
+      res.send("could not find messages for user");
+    } else {
+      res.json(messageDocs);
     }
   });
 });

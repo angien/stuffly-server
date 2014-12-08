@@ -3,6 +3,7 @@ var postModel = require('../post/postModel');
 // var locationModel = require('../location/locationModel');
 // var categoryModel = require('../category/categoryModel');
 var offerModel = require('../offer/offerModel');
+var messageModel = require('../message/messageModel');
 
 exports.getAllUsers = function(req, res, next) {
   userModel.find(next);
@@ -137,4 +138,31 @@ exports.getUserPosts = function(req, res, next) {
   var userId = userDoc._id;
 
   postModel.find({ "user": userId }, next);
-}
+};
+
+exports.getUserMessagesCreated = function(req, res, next) {
+  var userDoc = req.userDoc;
+  var userId = userDoc._id;
+
+  messageModel.find({ "from_id": userId }, next);
+};
+
+exports.getUserMessagesReceived = function(req, res, next) {
+  var userDoc = req.userDoc;
+  var userId = userDoc._id;
+
+  messageModel.find({ "to_id": userId }, next);
+};
+
+exports.getUserMessages = function(req, res, next) {
+  var userDoc = req.userDoc;
+  var userId = userDoc._id;
+
+  messageModel.find( {
+    $or: [{
+      "from_id": userId
+    }, {
+      "to_id": userId
+    }]
+  }, next);
+};
