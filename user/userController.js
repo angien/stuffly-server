@@ -18,7 +18,8 @@ exports.createOneUser = function(req, res, next) {
     'firstname' : req.body.firstname,
     'lastname' : req.body.lastname,
     'email' : req.body.email,
-    'password' : req.body.password
+    'password' : req.body.password,
+    'imageUrl' : req.body.imageUrl
   };
 
   // If the user is already created, then just return the user
