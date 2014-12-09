@@ -5,7 +5,8 @@ var messageSchema = new schema({
   date: { type: Date, default: Date.now() },
   to_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   from_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  message: String
+  message: String,
+  replied: { type: Boolean, default: false }
 });
 
 /*

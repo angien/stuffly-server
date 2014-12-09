@@ -22,6 +22,7 @@ exports.createOneMessage = function(req, res, next) {
 exports.updateOneMessage = function(req, res, next) {
   // You can't update who sent the message and to whom the message was sent
   req.messageDoc.message = req.body.message;
+  req.messageDoc.replied = true;
 
   req.messageDoc.save(next);
 };
