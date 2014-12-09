@@ -80,6 +80,7 @@
               <li><a href=""><span class='glyphicon glyphicon-save' aria-hidden='true'></span> Download</a></li>
               <li><a href="#">Features</a></li>
               <li><a href="#">Documentation</a></li>
+              <li><a href="team.html">The Team</a></li>
             </ul>
             <ul class="nav nav-sidebar">
               <li><a href="#"><span class='glyphicon glyphicon-new-window' aria-hidden='true'></span> Google Analytics</a></li>
@@ -122,9 +123,9 @@
                 </div>
               </div>
             </form>
-          
 
-          
+
+
 
         </div>
       </div>
@@ -158,7 +159,7 @@
         $("#lastname").attr("value", data.lastname);
         $("#email").attr("value", data.email);
         $("#password").attr("value", data.password);
-        
+
 
 
       });
@@ -167,27 +168,10 @@
 
 
 
-    }
-
-
-    function saveChanges() {
-
-      console.log("{\"firstname\":\"" + $('#firstname')[0].value + "\",\"lastname\":\"" + $('#lastname')[0].value + "\",\"email\":\"" + $('#email')[0].value + "\",\"password\":\"" + $('#password')[0].value +"\"}");
-
-      $.ajax({
-        url: '/api/user/' + getCookie("userid"),
-        type: 'PUT',
-        headers: {'Content-Type':'application/json'},
-        data: "{\"firstname\":\"" + $('#firstname')[0].value + "\",\"lastname\":\"" + $('#lastname')[0].value + "\",\"email\":\"" + $('#email')[0].value + "\",\"password\":\"" + $('#password')[0].value +"\"}",
-        success: function(result) {
-          $("#changeStatus").html("<div class='alert alert-success' role='alert'>Your changes were saved!</div>");
-          setTimeout("location.reload();", 3000);
-        }
-      });
     }
 
     </script>
-    
+
     <script src="css/bootstrap-3.3.1/dist/js/bootstrap.min.js"></script>
     <script src="css/bootstrap-3.3.1/docs/assets/js/docs.min.js"></script>
     <script src="css/bootstrap-3.3.1/bootstrap-table/dist/bootstrap-table.min.js"></script>

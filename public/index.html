@@ -80,6 +80,7 @@
               <li><a href=""><span class='glyphicon glyphicon-save' aria-hidden='true'></span> Download</a></li>
               <li><a href="#">Features</a></li>
               <li><a href="#">Documentation</a></li>
+              <li><a href="team.html">The Team</a></li>
             </ul>
 
 
@@ -174,7 +175,7 @@
 
         // show their user name
         $("#user_firstname").text(", " + data.firstname);
-        
+
         // set up my posts
         $('#mypost_table').bootstrapTable({
           method: 'get',
@@ -194,17 +195,17 @@
             field: 'description',
             title: 'Description',
             sortable: true
-            
+
           }, {
             field: 'price',
             title: 'Price',
-            
+
             sortable: true
           }, {
             field: 'condition',
             title: 'Condition',
             sortable: true
-            
+
           }]
         });
 
@@ -240,7 +241,7 @@
 
 
     </script>
-    
+
     <script src="css/bootstrap-3.3.1/dist/js/bootstrap.min.js"></script>
     <script src="css/bootstrap-3.3.1/docs/assets/js/docs.min.js"></script>
     <script src="css/bootstrap-3.3.1/bootstrap-table/dist/bootstrap-table.min.js"></script>
