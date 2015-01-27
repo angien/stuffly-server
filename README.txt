@@ -1,4 +1,4 @@
-Developers: Ryan Liao, Michael Luo
+Developers: Ryan Liao, Michael Luo, Angie Nguyen
 
 Stuffly Server README
 
@@ -7,6 +7,7 @@ Softwares:
 	- MongoDB
 	- elastic beanstalk (AWS)
 		- do this through NPM
+	- heroku
 
 How to run unit tests:
 	- Make sure you are in root directory
